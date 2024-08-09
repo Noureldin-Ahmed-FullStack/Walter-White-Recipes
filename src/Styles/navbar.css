@@ -1,0 +1,10 @@
+.darkThemeText{
+    color: rgba(0, 0, 0, 0.822) !important;
+}
+.darkThemeText:hover{
+    color: rgba(0, 0, 0, 0.822) !important;
+    font-weight: 900;
+}
+.LightThemeNav{
+    background-image: linear-gradient(90deg,#905689, #5e50ad);
+}
