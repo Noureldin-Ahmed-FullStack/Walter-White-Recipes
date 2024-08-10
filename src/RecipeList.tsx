@@ -1,24 +1,67 @@
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, MenuItem, Paper, Select, SelectChangeEvent, Tooltip, Typography } from "@mui/material";
+import { Autocomplete, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, MenuItem, Paper, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
 import { useRecipes } from "./Hooks/useRecipes";
 import './Styles/Home.css'
 import { useState } from "react";
 import CenteredPage from "./CenteredPage";
 import { ScaleLoader } from "react-spinners";
-import { recipeAreas } from "./types";
+import { recipeAreas, recipeIngredients } from "./types";
 export default function RecipeList() {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const [Letter, setLetter] = useState('k')
-  const [Area, setArea] = useState('American')
-  const [Querry, setQuerry] = useState('/search.php?f=k')
-  const [FilterMethod, setFilterMethod] = useState('letter')
-  const handleCategoryChange = (event: SelectChangeEvent) => {
-    setLetter(event.target.value as string);
+  const [Area, setArea] = useState<string | null>('American')
+  const [RecipeName, setRecipeName] = useState('')
+  const [Ingredient, setIngredient] = useState<string | null>('Chicken')
+  const [QuerryTitle, setQuerryTitle] = useState('/search.php?s=')
+  const [Querry, setQuerry] = useState('/search.php?s')
+  const [QuerryValue, setQuerryValue] = useState<string | null>('k')
+  const [FilterMethod, setFilterMethod] = useState('recipe')
+  const FilterData = ()=>{
+    setQuerry(QuerryTitle + QuerryValue)
+    console.log(QuerryTitle + QuerryValue);
+    
+  }
+  const handleIngredientChange = (_event: any, newValue: string | null) => {
+    setIngredient(newValue);
+    setQuerryValue(newValue)
   };
-  const handleAreaChange = (event: SelectChangeEvent) => {
+  const handleRecipeNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRecipeName(event.target.value);
+    setQuerryValue(event.target.value)
+  };
+  const handleAreaChange = (_event: any, newValue: string | null) => {
+    setArea(newValue);
+    setQuerryValue(newValue)
+  };
+  const handleLetterChange = (event: SelectChangeEvent) => {
     setLetter(event.target.value as string);
+    setQuerryValue(event.target.value)
   };
   const handleFilterMethodChange = (event: SelectChangeEvent) => {
     setFilterMethod(event.target.value as string);
+
+    switch (event.target.value as string) {
+      case 'letter':
+        setQuerryTitle('/search.php?f=')
+        setQuerryValue(Letter as string)
+        break
+      case 'area':
+        setQuerryTitle('/filter.php?a=')
+        setQuerryValue(Area as string)
+        break
+      case 'ingredient':
+        setQuerryTitle('/filter.php?i=')
+        setQuerryValue(Ingredient as string)
+        break
+      case 'recipe':
+        setQuerryTitle('/search.php?s=')
+        setQuerryValue(RecipeName as string)
+        break
+      default:
+        // Optional: Handle any unexpected cases
+        setQuerryTitle('/search.php?s=');
+        setQuerryValue('b');
+        break;
+    }
   };
   const renderContent = () => {
     switch (FilterMethod) {
@@ -30,7 +73,7 @@ export default function RecipeList() {
           id="Letter-select"
           value={Letter}
           label="Letter-select"
-          onChange={handleCategoryChange}
+          onChange={handleLetterChange}
         >
           {alphabet.map((letter) => (
             <MenuItem key={letter} value={letter}>
@@ -39,31 +82,31 @@ export default function RecipeList() {
           ))}
         </Select>;
       case 'ingredient':
-        return <h1>About View</h1>;
+        return <Autocomplete
+          options={recipeIngredients}
+          value={Ingredient} // Set the default value
+          onChange={handleIngredientChange} // Handle value changes
+          getOptionLabel={(option) => option}
+          renderInput={(params) => <TextField {...params} variant="outlined" />}
+          isOptionEqualToValue={(option, value) => option === value}
+        />;
       case 'area':
-        return <Select
-        fullWidth
-        className="overflow-hidden"
-        labelId="Letter-select"
-        id="Letter-select"
-        value={Area}
-        label="Letter-select"
-        onChange={handleAreaChange}
-      >
-        {recipeAreas.map((area) => (
-          <MenuItem key={area.strArea} value={area.strArea}>
-            {area.strArea}
-          </MenuItem>
-        ))}
-      </Select>;
+        return <Autocomplete
+          options={recipeAreas}
+          value={Area} // Set the default value
+          onChange={handleAreaChange} // Handle value changes
+          getOptionLabel={(option) => option}
+          renderInput={(params) => <TextField {...params} variant="outlined" />}
+          isOptionEqualToValue={(option, value) => option === value}
+        />;
       case 'recipe':
-        return <h1>Contact View</h1>;
+        return <TextField onChange={handleRecipeNameChange} variant="outlined" fullWidth placeholder="Koshary" />;
       default:
         return <h1>404 - Not Found</h1>;
     }
   };
 
-  const { data, isLoading, error } = useRecipes(`/search.php?f=${Letter}`);
+  const { data, isLoading, error } = useRecipes(Querry);
   if (isLoading) return (
     <CenteredPage>
       <ScaleLoader />
@@ -74,6 +117,8 @@ export default function RecipeList() {
     <div className='w-100 flex-grow-1 d-flex flex-column'>
       <div className="container mt-3 mb-3">
         <Paper className="alert text-start w-100" sx={{ backgroundColor: 'grey-900' }}>
+          {/* {QuerryTitle + QuerryValue} */}
+          {/* {RecipeName} */}
           <div className="row align-items-center">
             <div className="col-4 d-flex">
               Sort By:
@@ -106,7 +151,7 @@ export default function RecipeList() {
             </div>
 
           </div>
-
+          <Button onClick={FilterData} fullWidth className="mt-2" color="secondary" variant="outlined">Filter</Button>
         </Paper>
         <div className="row gy-3">
           {data?.map((item => (

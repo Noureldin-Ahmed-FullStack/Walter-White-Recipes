@@ -3,12 +3,27 @@ import axios from 'axios';
 import { recipes } from '../types';
 const BaseURL = import.meta.env.VITE_BASE_URL;
 const fetchRecipes = async (query: string) => {
-    const response = await axios.get(BaseURL+ query);
-    return response.data.meals as recipes[];
+    try {
+        const response = await axios.get(BaseURL + query);
+        if (response) {
+        return response.data.meals as recipes[];
+        }
+        return []
+    } catch (error) {
+        console.error(error);
+        return []
+    }
+
 };
 const fetchProductDetails = async (productId: string) => {
-    const response = await axios.get(`${BaseURL}/products/${productId}`);
-    return response.data.meals;
+    try {
+        const response = await axios.get(`${BaseURL}/products/${productId}`);
+        return response.data.meals;
+    } catch (error) {
+        console.error(error);
+        return null
+    }
+
 };
 
 export const useRecipes = (query: string) => {

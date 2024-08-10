@@ -13,12 +13,14 @@ import CenteredPage from './CenteredPage.tsx';
 import RecipeList from './RecipeList.tsx';
 import NotFoundPage from './Components/NotFoundPage.tsx';
 import MyContextProvider from './Components/ContextProvider.tsx';
+import Test from './Test.tsx';
 const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       { path: "/", element: <RecipeList /> },
       { path: "/walter-white-recipes", element: <RecipeList /> },
+      { path: "/test", element: <Test /> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },
     ]
   }
