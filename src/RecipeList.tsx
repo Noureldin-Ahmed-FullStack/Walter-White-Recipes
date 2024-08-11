@@ -6,7 +6,13 @@ import CenteredPage from "./CenteredPage";
 import { ScaleLoader } from "react-spinners";
 import { recipeAreas, recipeIngredients } from "./types";
 import { useNavigate } from "react-router-dom";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import GlobalStates from "./Components/GlobalState";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 export default function RecipeList() {
+  const { favouriteRecipiesIDs, addFavourite, removeFavourite } = GlobalStates();
+
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const [Letter, setLetter] = useState('a')
   const [Area, setArea] = useState<string | null>('American')
@@ -123,6 +129,7 @@ export default function RecipeList() {
     <div className='w-100 flex-grow-1 d-flex flex-column'>
       <div className="container mt-3 mb-3">
         <Paper className="alert text-start w-100" sx={{ backgroundColor: 'grey-900' }}>
+         
           {/* {QuerryTitle + QuerryValue} */}
           {/* {RecipeName} */}
           <form onSubmit={FilterData}>
@@ -164,34 +171,66 @@ export default function RecipeList() {
         </Paper>
         <div className="row gy-3">
           {data?.map((item => (
-            <div className="col-6 col-sm-4 col-md-3 col-lg-3" onClick={()=>goToRecipe(item.idMeal)} key={item.idMeal}>
+            <div className="col-6 col-sm-4 col-md-3 col-lg-3" onClick={() => goToRecipe(item.idMeal)} key={item.idMeal}>
               <Card className="h-100">
-                <Tooltip title={item.strMeal} followCursor className="pointer">
-                  <CardActionArea>
-                    <CardMedia
-                      className="movie-item pointer position-relative"
-                      sx={{ height: 140, objectFit: 'cover' }}
-                      image={item.strMealThumb}
-                      title={item.strMeal}
-                    />
+                <CardActionArea>
+                  <Tooltip title={item.strMeal} followCursor className="pointer">
+                    <div>
+                      <CardMedia
+                        className="movie-item pointer position-relative"
+                        sx={{ height: 140, objectFit: 'cover' }}
+                        image={item.strMealThumb}
+                        // title={item.strMeal}
+                      />
+                    </div>
+                  </Tooltip>
 
-                    <CardContent className="text-start pb-0">
-                      <h6 className="m-0 truncate-text">{item.strMeal}</h6>
-                      {/* <Typography variant="body2" color="text.secondary" className="m-0 truncate-text">
+                  <CardContent className="text-start pb-0">
+                    <div className="row align-items-center">
+                      <div className="col-6">
+                        <h6 className="m-0 truncate-text">{item.strMeal}</h6>
+                      </div>
+                      <div className="col-6 text-end">
+                        {favouriteRecipiesIDs.includes(item.idMeal) ? (
+                          <Tooltip title="Remove From Favourites" followCursor className="pointer">
+                            <FavoriteIcon
+                              sx={{
+                                color: '#af0000', // Set the default color
+                                transition: 'color 0.5s ease', // Transition for color change
+                                '&:hover': {
+                                  color: 'black', // Set the color on hover
+                                },
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevents the goToRecipe function from being triggered
+                                removeFavourite(item.idMeal);
+                              }}
+                            />
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title="Add to Favourites" followCursor className="pointer">
+                            <FavoriteBorderIcon
+                              sx={{
+                                color: 'defaultColor', // Set the default color
+                                transition: 'color 0.5s ease', // Transition for color change
+                                '&:hover': {
+                                  color: 'red', // Set the color on hover
+                                },
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevents the goToRecipe function from being triggered
+                                addFavourite(item);
+                              }}
+                            />
+                          </Tooltip>
+                        )}
 
-                        <Tooltip title={item.strInstructions} followCursor className="pointer">
-                          <span className="m-0">{item.strInstructions}</span>
-                        </Tooltip>
-                      </Typography> */}
-                    </CardContent>
-                    <CardActions className="">
-                      {/* <h6 className="price exo-2-bold mb-0">{item.idMeal} Egp.</h6> */}
-                      {/* <Button size="small">Learn More</Button> */}
-                    </CardActions>
-                  </CardActionArea>
-                </Tooltip>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardActions></CardActions>
+                </CardActionArea>
               </Card>
-
             </div>
           )))}
         </div>

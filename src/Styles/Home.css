@@ -429,3 +429,6 @@
   cursor: pointer;
 color: white;
 }
+.negMarginLeft{
+  margin-left: -11rem;
+}
