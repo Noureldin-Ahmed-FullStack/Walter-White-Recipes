@@ -10,7 +10,7 @@ export default function TagsTypography(props:props) {
   return (
     <div>
       {array.map((item,index)=>(
-        <Chip key={index} className="m-2 my-1" label={item} />
+        <Chip key={index} color="warning" onClick={()=> {}} className="me-3 my-1" label={item} />
       ))}
     </div>
   )
