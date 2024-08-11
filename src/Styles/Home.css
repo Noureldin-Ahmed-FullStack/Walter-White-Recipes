@@ -390,3 +390,12 @@
 .darkTheme-text {
   color: #efefef;
 }
+
+.WhiteSpacable{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+}
+.smallFont{
+  font-size: 0.9rem;
+}
