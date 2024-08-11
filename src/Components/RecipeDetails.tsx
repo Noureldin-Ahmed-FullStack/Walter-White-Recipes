@@ -39,16 +39,22 @@ export default function RecipeDetails() {
                                     </a>
 
                                 </div>
-                                <div className="d-flex justify-content-between align-items-center">
-                                <h2 className="mt-2">{data.strMeal}</h2>
-                                <Chip onClick={()=>window.open(data.strYoutube, '_blank')} icon={<YouTubeIcon />} color="error" label="Watch Tutorial" />
+                                <div className="row justify-content-between align-items-center mt-2">
+                                    <div className="col-6">
+                                    <h2>{data.strMeal}</h2>
+
+                                    </div>
+                                    <div className="col-6 text-end">
+                                    <Chip className="noLink" onClick={()=>{}} component={'a'} href={data.strYoutube} target="_blank" icon={<YouTubeIcon />} color="error" label="Watch Tutorial" />
+
+                                    </div>
                                 </div>
                                 <TagsTypography tags={data.strTags} />
                             </div>
                             <div className="col-md-7 col-sm-7">
                                 <div className="d-flex align-items-center justify-content-between">
                                     <h2>Instructions</h2>
-                                    <a target="_blank" href={data.strSource}>view recipe source <LaunchIcon /></a>
+                                    <a target="_blank" className="text-end" href={data.strSource}>view recipe source <LaunchIcon /></a>
                                 </div>
                                 {/* <h6 className="text-secondary-emphasis">{data.strInstructions}</h6> */}
                                 <InstructionTypography instructions={data.strInstructions} />

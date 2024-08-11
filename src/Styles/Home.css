@@ -425,3 +425,7 @@
 .image-container:hover .overlay {
   opacity: 1;
 }
+.noLink:hover{
+  cursor: pointer;
+color: white;
+}
