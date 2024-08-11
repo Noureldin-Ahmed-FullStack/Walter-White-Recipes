@@ -6,6 +6,7 @@ import { ScaleLoader } from "react-spinners";
 import { Paper } from "@mui/material";
 import IngredientsTable from "./IngredientsTable";
 import InstructionTypography from "./InstructionTypography";
+import TagsTypography from "./tagsTypography";
 export default function RecipeDetails() {
     const { RecipeId } = useParams();
     if (RecipeId) {
@@ -26,6 +27,7 @@ export default function RecipeDetails() {
                             <div className="col-md-5 col-sm-5">
                                 <img className="w-100" src={data.strMealThumb} alt={data.strMeal} />
                                 <h2>{data.strMeal}</h2>
+                                <TagsTypography tags={data.strTags}/>
                             </div>
                             <div className="col-md-7 col-sm-7">
                                 <h2>Instructions</h2>
