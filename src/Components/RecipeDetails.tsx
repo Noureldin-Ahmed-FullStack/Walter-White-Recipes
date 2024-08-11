@@ -10,9 +10,6 @@ import TagsTypography from "./tagsTypography";
 import LaunchIcon from '@mui/icons-material/Launch';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 export default function RecipeDetails() {
-    function openInNewTab(url:string) {
-        window.open(url, '_blank');
-      }
     const { RecipeId } = useParams();
     if (RecipeId) {
         const { data, isLoading, error } = useRecipeDetails(RecipeId)
