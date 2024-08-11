@@ -6,9 +6,9 @@ import { ScaleLoader } from "react-spinners";
 import { Chip, Paper } from "@mui/material";
 import IngredientsTable from "./IngredientsTable";
 import InstructionTypography from "./InstructionTypography";
-import TagsTypography from "./tagsTypography";
 import LaunchIcon from '@mui/icons-material/Launch';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import TagsTypography from "./TagsTypography";
 export default function RecipeDetails() {
     const { RecipeId } = useParams();
     if (RecipeId) {
