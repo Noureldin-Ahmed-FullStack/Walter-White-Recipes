@@ -1,24 +1,30 @@
-import { Autocomplete, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, MenuItem, Paper, Select, SelectChangeEvent, TextField, Tooltip, Typography } from "@mui/material";
+import { Autocomplete, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, MenuItem, Paper, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
 import { useRecipes } from "./Hooks/useRecipes";
 import './Styles/Home.css'
 import { useState } from "react";
 import CenteredPage from "./CenteredPage";
 import { ScaleLoader } from "react-spinners";
 import { recipeAreas, recipeIngredients } from "./types";
+import { useNavigate } from "react-router-dom";
 export default function RecipeList() {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  const [Letter, setLetter] = useState('k')
+  const [Letter, setLetter] = useState('a')
   const [Area, setArea] = useState<string | null>('American')
   const [RecipeName, setRecipeName] = useState('')
   const [Ingredient, setIngredient] = useState<string | null>('Chicken')
   const [QuerryTitle, setQuerryTitle] = useState('/search.php?s=')
   const [Querry, setQuerry] = useState('/search.php?s')
-  const [QuerryValue, setQuerryValue] = useState<string | null>('k')
+  const [QuerryValue, setQuerryValue] = useState<string | null>('a')
   const [FilterMethod, setFilterMethod] = useState('recipe')
-  const FilterData = ()=>{
+  const navigate = useNavigate();
+  const goToRecipe = (id: string) => {
+    navigate(`/Recipes/${id}`); // Replace '/desired-path' with your desired URL
+  };
+  const FilterData = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setQuerry(QuerryTitle + QuerryValue)
     console.log(QuerryTitle + QuerryValue);
-    
+
   }
   const handleIngredientChange = (_event: any, newValue: string | null) => {
     setIngredient(newValue);
@@ -119,68 +125,71 @@ export default function RecipeList() {
         <Paper className="alert text-start w-100" sx={{ backgroundColor: 'grey-900' }}>
           {/* {QuerryTitle + QuerryValue} */}
           {/* {RecipeName} */}
-          <div className="row align-items-center">
-            <div className="col-4 d-flex">
-              Sort By:
-              <Select
-                fullWidth
-                className="overflow-hidden"
-                labelId="Letter-select"
-                id="Letter-select"
-                value={FilterMethod}
-                label="Letter-select"
-                onChange={handleFilterMethodChange}
-              >
-                <MenuItem value='letter'>
-                  Letter
-                </MenuItem>
-                <MenuItem value='area'>
-                  area
-                </MenuItem>
-                <MenuItem value='ingredient'>
-                  ingredient
-                </MenuItem>
-                <MenuItem value='recipe'>
-                  Recipe
-                </MenuItem>
-              </Select>
-            </div>
-            <div className="col-8">
+          <form onSubmit={FilterData}>
+            <div className="row align-items-center">
+              <div className="col-4 d-flex">
+                Sort By:
+                <Select
+                  fullWidth
+                  className="overflow-hidden"
+                  labelId="Letter-select"
+                  id="Letter-select"
+                  value={FilterMethod}
+                  label="Letter-select"
+                  onChange={handleFilterMethodChange}
+                >
+                  <MenuItem value='letter'>
+                    Letter
+                  </MenuItem>
+                  <MenuItem value='area'>
+                    area
+                  </MenuItem>
+                  <MenuItem value='ingredient'>
+                    ingredient
+                  </MenuItem>
+                  <MenuItem value='recipe'>
+                    Recipe
+                  </MenuItem>
+                </Select>
+              </div>
+              <div className="col-8">
 
-              {renderContent()}
-            </div>
+                {renderContent()}
+              </div>
 
-          </div>
-          <Button onClick={FilterData} fullWidth className="mt-2" color="secondary" variant="outlined">Filter</Button>
+            </div>
+            <Button fullWidth className="mt-2" color="secondary" type="submit" variant="outlined">Filter</Button>
+          </form>
+
         </Paper>
         <div className="row gy-3">
           {data?.map((item => (
-            <div className="col-6 col-sm-4 col-md-3 col-lg-3 " key={item.idMeal}>
+            <div className="col-6 col-sm-4 col-md-3 col-lg-3" onClick={()=>goToRecipe(item.idMeal)} key={item.idMeal}>
               <Card className="h-100">
-                <CardActionArea>
-                  <CardMedia
-                    className="movie-item pointer position-relative"
-                    sx={{ height: 140, objectFit: 'cover' }}
-                    image={item.strMealThumb}
-                    title={item.strMeal}
-                  />
+                <Tooltip title={item.strMeal} followCursor className="pointer">
+                  <CardActionArea>
+                    <CardMedia
+                      className="movie-item pointer position-relative"
+                      sx={{ height: 140, objectFit: 'cover' }}
+                      image={item.strMealThumb}
+                      title={item.strMeal}
+                    />
 
-                  <CardContent className="text-start pb-0">
-                    <Tooltip title={item.strMeal} followCursor className="pointer">
+                    <CardContent className="text-start pb-0">
                       <h6 className="m-0 truncate-text">{item.strMeal}</h6>
-                    </Tooltip>
-                    <Typography variant="body2" color="text.secondary" className="m-0 truncate-text">
+                      {/* <Typography variant="body2" color="text.secondary" className="m-0 truncate-text">
 
-                      <Tooltip title={item.strInstructions} followCursor className="pointer">
-                        <span className="m-0">{item.strInstructions}</span>
-                      </Tooltip>
-                    </Typography>
-                  </CardContent>
-                  <CardActions className="">
-                    <h6 className="price exo-2-bold mb-0">{item.idMeal} Egp.</h6>
-                    {/* <Button size="small">Learn More</Button> */}
-                  </CardActions>
-                </CardActionArea>
+                        <Tooltip title={item.strInstructions} followCursor className="pointer">
+                          <span className="m-0">{item.strInstructions}</span>
+                        </Tooltip>
+                      </Typography> */}
+                    </CardContent>
+                    <CardActions className="">
+                      {/* <h6 className="price exo-2-bold mb-0">{item.idMeal} Egp.</h6> */}
+                      {/* <Button size="small">Learn More</Button> */}
+                    </CardActions>
+                  </CardActionArea>
+                </Tooltip>
               </Card>
 
             </div>

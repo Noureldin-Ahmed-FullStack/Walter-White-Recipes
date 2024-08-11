@@ -15,10 +15,12 @@ const fetchRecipes = async (query: string) => {
     }
 
 };
-const fetchProductDetails = async (productId: string) => {
+const fetchRecipeDetails = async (RecipeId: string) => {
     try {
-        const response = await axios.get(`${BaseURL}/products/${productId}`);
-        return response.data.meals;
+        const response = await axios.get(`${BaseURL}/lookup.php?i=${RecipeId}`);
+        console.log(response.data.meals[0]);
+        
+        return response.data.meals[0] as recipes;
     } catch (error) {
         console.error(error);
         return null
@@ -35,10 +37,10 @@ export const useRecipes = (query: string) => {
     });
 };
 
-export const useProductDetails = (productId: string) => {
+export const useRecipeDetails = (RecipeId: string) => {
     return useQuery({
-        queryKey: ['productDetails', productId],
-        queryFn: () => fetchProductDetails(productId),
+        queryKey: ['RecipeDetails', RecipeId],
+        queryFn: () => fetchRecipeDetails(RecipeId),
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
