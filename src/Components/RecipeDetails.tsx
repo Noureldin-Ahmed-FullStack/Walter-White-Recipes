@@ -45,7 +45,7 @@ export default function RecipeDetails() {
 
                                     </div>
                                     <div className="col-6 text-end">
-                                    <Chip className="noLink" onClick={()=>{}} component={'a'} href={data.strYoutube} target="_blank" icon={<YouTubeIcon />} color="error" label="Watch Tutorial" />
+                                    <Chip className="text-white" onClick={()=>{}} component={'a'} href={data.strYoutube} target="_blank" icon={<YouTubeIcon />} color="error" label="Watch Tutorial" />
 
                                     </div>
                                 </div>

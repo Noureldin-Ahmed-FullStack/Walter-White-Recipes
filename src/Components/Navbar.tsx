@@ -7,16 +7,18 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Link } from 'react-router-dom';
+import GlobalStates from './GlobalState';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['home','Recipes', 'Blog'];
 
 export default function Navbar() {
+    const { Theme,ToggleTheme } = GlobalStates();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -35,21 +37,26 @@ export default function Navbar() {
         setAnchorElUser(null);
     };
 
+    const Dmode = () => {
+        ToggleTheme()
+        setAnchorElUser(null);
+    };
     return (
-        <AppBar className='bg-transparent text-black' position="static">
+        <AppBar className={`bg-transparent ${Theme == 'light'? 'text-black': 'text-light'}`} position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters className='justify-content-between'>
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
+                        component={Link}
+                        className='noLink'
+                        to="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '.15rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
@@ -89,7 +96,10 @@ export default function Navbar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} className='noLink'
+                                component={Link}
+                                to={page} 
+                                onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
@@ -97,10 +107,11 @@ export default function Navbar() {
                     </Box>
                     <RestaurantIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
-                        variant="h5"
+                        variant="h6"
                         noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
+                        component={Link}
+                        className='noLink'
+                        to="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -117,8 +128,10 @@ export default function Navbar() {
                     <Box className='negMarginLeft' sx={{ display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                                className='text-black'
+                                className={`${Theme == 'light'? 'text-black': 'text-light'} mx-2 noLink`}
                                 key={page}
+                                component={Link}
+                                to={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
@@ -130,7 +143,7 @@ export default function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <SettingsIcon fontSize='large'/>
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -149,11 +162,12 @@ export default function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={Dmode}>
+                                <Typography textAlign="center">Darkmode</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">Favourites</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

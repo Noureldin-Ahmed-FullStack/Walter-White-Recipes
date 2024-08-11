@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom'
 import './Styles/Home.css'
-import { useMyContext } from './Components/useMyContext'
 import { createTheme, ThemeProvider } from '@mui/material'
 import Navbar from './Components/Navbar'
+import GlobalStates from './Components/GlobalState'
 
 function App() {
-  const { Theme } = useMyContext()
+  const { Theme } = GlobalStates()
   let theme = createTheme({
     palette: {
       mode: Theme,

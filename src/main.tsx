@@ -21,6 +21,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <RecipeList /> },
       { path: "/walter-white-recipes", element: <RecipeList /> },
+      { path: "/home", element: <RecipeList /> },
+      { path: "/recipes", element: <RecipeList /> },
       { path: "/recipes/:RecipeId", element: <RecipeDetails /> },
       { path: "/test", element: <Test /> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },
