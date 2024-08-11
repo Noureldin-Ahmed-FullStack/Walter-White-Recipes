@@ -439,3 +439,6 @@
 .negMarginLeft {
   margin-left: -12rem;
 }
+*{
+  transition: background 0.5s ease-in-out, color 0.3s ease-in-out;
+}

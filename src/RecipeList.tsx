@@ -134,8 +134,8 @@ export default function RecipeList() {
           {/* {RecipeName} */}
           <form onSubmit={FilterData}>
             <div className="row align-items-center">
-              <div className="col-4 d-flex">
-                Sort By:
+              <div className="col-5 d-flex">
+                <p className="m-0 d-flex align-items-center" style={{width:'100px'}}>Sort By:</p>
                 <Select
                   fullWidth
                   className="overflow-hidden"
@@ -159,7 +159,7 @@ export default function RecipeList() {
                   </MenuItem>
                 </Select>
               </div>
-              <div className="col-8">
+              <div className="col-7">
 
                 {renderContent()}
               </div>

@@ -15,6 +15,7 @@ import NotFoundPage from './Components/NotFoundPage.tsx';
 import MyContextProvider from './Components/ContextProvider.tsx';
 import Test from './Test.tsx';
 import RecipeDetails from './Components/RecipeDetails.tsx';
+import Blog from './Components/Blog.tsx';
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
       { path: "/", element: <RecipeList /> },
       { path: "/walter-white-recipes", element: <RecipeList /> },
       { path: "/home", element: <RecipeList /> },
+      { path: "/blog", element: <Blog /> },
       { path: "/recipes", element: <RecipeList /> },
+      { path: "/favourites", element: <RecipeList /> },
       { path: "/recipes/:RecipeId", element: <RecipeDetails /> },
       { path: "/test", element: <Test /> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },

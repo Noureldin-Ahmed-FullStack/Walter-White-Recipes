@@ -11,11 +11,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from 'react-router-dom';
 import GlobalStates from './GlobalState';
+import Brightness6Icon from '@mui/icons-material/Brightness6';
+import Brightness6OutlinedIcon from '@mui/icons-material/Brightness6Outlined';
 
-const pages = ['home','Recipes', 'Blog'];
+const pages = ['home','Recipes','favourites', 'Blog'];
 
 export default function Navbar() {
     const { Theme,ToggleTheme } = GlobalStates();
@@ -24,9 +25,6 @@ export default function Navbar() {
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseNavMenu = () => {
@@ -142,9 +140,10 @@ export default function Navbar() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <SettingsIcon fontSize='large'/>
-                            </IconButton>
+                            </IconButton> */}
+                            <Button color='warning' variant='contained' className='noLink text-white' onClick={Dmode}>{Theme == 'dark'? <Brightness6OutlinedIcon className='me-3'/>:<Brightness6Icon className='me-3'/>}Darkmode</Button>
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
@@ -162,12 +161,9 @@ export default function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem onClick={Dmode}>
-                                <Typography textAlign="center">Darkmode</Typography>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">Favourites</Typography>
-                            </MenuItem>
+                            {/* <MenuItem onClick={Dmode}> */}
+                                {/* <Typography onClick={Dmode} textAlign="center"><Brightness6Icon className='me-3'/>Darkmode</Typography> */}
+                            {/* </MenuItem> */}
                         </Menu>
                     </Box>
                 </Toolbar>
