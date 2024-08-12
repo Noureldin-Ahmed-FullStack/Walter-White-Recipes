@@ -22,7 +22,7 @@ export default function RecipeDetails() {
         if (!data) return <CenteredPage><NotFoundPage /></CenteredPage>;
         return (
             <CenteredPage>
-                <div className="container">
+                <div className="container HankenGrotesk">
                     <Paper className="alert text-start w-100 p-4 my-5" sx={{ backgroundColor: 'grey-900' }}>
 
                         <div className="row">

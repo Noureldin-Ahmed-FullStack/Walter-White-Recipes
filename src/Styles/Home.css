@@ -385,7 +385,7 @@
 }
 
 .darkTheme-bg {
-  background-color: #000;
+  background-color: #222222;
 }
 
 .darkTheme-text {
@@ -440,5 +440,24 @@
   margin-left: -12rem;
 }
 *{
-  transition: background 0.5s ease-in-out, color 0.3s ease-in-out;
+  transition: background 0.5s ease-in-out, color 0.1s ease-in-out;
+}
+.HomeDiv{
+  top: 0;
+  left: 0;
+  position: absolute;
+  padding-top: 5rem;
+  z-index: 1;
+  height: 75vh;
+  width: 100%;
+}
+.HomeDivDark{
+  background-color: #1b1b1b;
+}
+.HomeWhite{
+  background-color: white;
+}
+
+html {
+  overflow-y: scroll;
 }

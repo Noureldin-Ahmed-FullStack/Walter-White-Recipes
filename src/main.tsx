@@ -16,16 +16,18 @@ import MyContextProvider from './Components/ContextProvider.tsx';
 import Test from './Test.tsx';
 import RecipeDetails from './Components/RecipeDetails.tsx';
 import Blog from './Components/Blog.tsx';
+import Favourites from './Components/Favourites.tsx';
+import HomePage from './Components/HomePage.tsx';
 const router = createBrowserRouter([
   {
     element: <App />,
     children: [
-      { path: "/", element: <RecipeList /> },
-      { path: "/walter-white-recipes", element: <RecipeList /> },
-      { path: "/home", element: <RecipeList /> },
+      { path: "/", element: <HomePage /> },
+      { path: "/walter-white-recipes", element: <HomePage /> },
+      { path: "/home", element: <HomePage /> },
       { path: "/blog", element: <Blog /> },
       { path: "/recipes", element: <RecipeList /> },
-      { path: "/favourites", element: <RecipeList /> },
+      { path: "/favourites", element: <Favourites /> },
       { path: "/recipes/:RecipeId", element: <RecipeDetails /> },
       { path: "/test", element: <Test /> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },

@@ -126,7 +126,7 @@ export default function RecipeList() {
   );
   if (error) return <div>Error: {error.message}</div>;
   return (
-    <div className='w-100 flex-grow-1 d-flex flex-column'>
+    <div className='w-100 flex-grow-1 d-flex flex-column HankenGrotesk'>
       <div className="container mt-3 mb-3">
         <Paper className="alert text-start w-100" sx={{ backgroundColor: 'grey-900' }}>
          
@@ -196,7 +196,7 @@ export default function RecipeList() {
                             <FavoriteIcon
                               sx={{
                                 color: '#af0000', // Set the default color
-                                transition: 'color 0.5s ease', // Transition for color change
+                                transition: 'color 0.2s', // Transition for color change
                                 '&:hover': {
                                   color: 'black', // Set the color on hover
                                 },
@@ -212,7 +212,7 @@ export default function RecipeList() {
                             <FavoriteBorderIcon
                               sx={{
                                 color: 'defaultColor', // Set the default color
-                                transition: 'color 0.5s ease', // Transition for color change
+                                transition: 'color 0.2s ', // Transition for color change
                                 '&:hover': {
                                   color: 'red', // Set the color on hover
                                 },

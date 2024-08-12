@@ -11,15 +11,18 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import GlobalStates from './GlobalState';
 import Brightness6Icon from '@mui/icons-material/Brightness6';
 import Brightness6OutlinedIcon from '@mui/icons-material/Brightness6Outlined';
 
-const pages = ['home','Recipes','favourites', 'Blog'];
+const pages = ['home', 'Recipes', 'favourites', 'Blog'];
 
 export default function Navbar() {
-    const { Theme,ToggleTheme } = GlobalStates();
+
+    const location = useLocation();
+    const isHome = location.pathname === '/' || location.pathname === '/home' || location.pathname === '/walter-white-recipes';
+    const { Theme, ToggleTheme } = GlobalStates();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -40,7 +43,7 @@ export default function Navbar() {
         setAnchorElUser(null);
     };
     return (
-        <AppBar className={`bg-transparent ${Theme == 'light'? 'text-black': 'text-light'}`} position="static">
+        <AppBar sx={{ boxShadow: isHome?'none':'' }} className={`bg-transparent ${Theme == 'light' ? 'text-black' : 'text-light'} z-3`} position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters className='justify-content-between'>
                     <Typography
@@ -95,9 +98,9 @@ export default function Navbar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} className='noLink'
-                                component={Link}
-                                to={page} 
-                                onClick={handleCloseNavMenu}>
+                                    component={Link}
+                                    to={page}
+                                    onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
@@ -126,7 +129,7 @@ export default function Navbar() {
                     <Box className='negMarginLeft' sx={{ display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                                className={`${Theme == 'light'? 'text-black': 'text-light'} mx-2 noLink`}
+                                className={`${Theme == 'light' ? 'text-black' : 'text-light'} mx-2 noLink`}
                                 key={page}
                                 component={Link}
                                 to={page}
@@ -143,7 +146,7 @@ export default function Navbar() {
                             {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <SettingsIcon fontSize='large'/>
                             </IconButton> */}
-                            <Button color='warning' variant='contained' className='noLink text-white' onClick={Dmode}>{Theme == 'dark'? <Brightness6OutlinedIcon className='me-3'/>:<Brightness6Icon className='me-3'/>}Darkmode</Button>
+                            <Button color='warning' variant='contained' className='noLink text-white' onClick={Dmode}>{Theme == 'dark' ? <Brightness6OutlinedIcon className='me-3' /> : <Brightness6Icon className='me-3' />}Darkmode</Button>
                         </Tooltip>
                         <Menu
                             sx={{ mt: '45px' }}
@@ -162,7 +165,7 @@ export default function Navbar() {
                             onClose={handleCloseUserMenu}
                         >
                             {/* <MenuItem onClick={Dmode}> */}
-                                {/* <Typography onClick={Dmode} textAlign="center"><Brightness6Icon className='me-3'/>Darkmode</Typography> */}
+                            {/* <Typography onClick={Dmode} textAlign="center"><Brightness6Icon className='me-3'/>Darkmode</Typography> */}
                             {/* </MenuItem> */}
                         </Menu>
                     </Box>
